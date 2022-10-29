@@ -1,10 +1,50 @@
 <?php
 include "landlord_header.php";
+include "nav.php";
+
+// $con = mysqli_connect("localhost","root","","rental_v1");
+//get all properties from properties table
+$sql = "SELECT * FROM `properties`";
+$all_properties = mysqli_query($con, $sql);
 
 
+if(isset($_POST['submit'])){
+  $id = mysqli_real_escape_string($con , $_POST['properties']);
+  $house = mysqli_real_escape_string($con, $_POST['name']);
+  $housetype = mysqli_real_escape_string($con, $_POST['housetype']);
+  $block = mysqli_real_escape_string($con, $_POST['block']);
+  $bedrooms = mysqli_real_escape_string($con, $_POST['bedrooms']);
+  $bathrooms = mysqli_real_escape_string($con, $_POST['bathrooms']);
+  $rent =  mysqli_real_escape_string($con, $_POST['rent']);
+  $deposit = mysqli_real_escape_string($con, $_POST['deposit']);
+  $manager_id = $_SESSION['user_id'];
+  
+  $alert_array = array();
+  $alert_message='';
+  
+  $sql_insert = "INSERT INTO house(property_id, manager_id, house_name, house_type, block , bedroom ,bathrooms,rent, deposit) 
+  VALUES ('$id','$manager_id','$house','$housetype','$block','$bedrooms','$bathrooms','$rent','$deposit')";
+  
 
 
- ?>
+           if(mysqli_query($con, $sql_insert))
+           {
+            echo "House inserted successfully.";
+           }
+          //  mysqli_query($con, $sql);
+          //  mysqli_close($con);
+           
+            //  echo "<script type='text/javascript'>alert('The house has been added successfully.');</script>";
+            //  echo '<style>body{display:none;}</style>';
+            //  echo '<script>window.location.href = "house_detail.php";</script>';
+
+         
+}
+
+        
+                    ?>
+
+
  
     
      <div id="content-wrapper" class="d-flex flex-column">
@@ -12,53 +52,11 @@ include "landlord_header.php";
        <!-- Main Content -->
        <div id="content">
 
-         <!-- Topbar -->
-         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-           <!-- Sidebar Toggle (Topbar) -->
-           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-             <i class="fa fa-bars"></i>
-           </button>
-
-
-           <ul class="navbar-nav ml-auto">
-
-
-             <div class="topbar-divider d-none d-sm-block"></div>
-
-             <!-- Nav Item - User Information -->
-             <li class="nav-item dropdown no-arrow">
-             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-black small"><?php
-
-                include "conn.php";
-                $uname = $_SESSION['username'];
-                echo "<b><b>".$uname."</b></b>";
-
-                  ?></span>
-<i class="bi bi-person text-gray-900"></i>
-          
-              </a>
-               <!-- Dropdown - User Information -->
-               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-
-                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                   Logout
-                 </a>
-
-             </li>
-
-           </ul>
-
-         </nav>
-         <!-- End of Topbar -->
-
          <!-- Begin Page Content -->
          <div class="container-fluid">
 
            <!-- Page Heading -->
-           <h1 class="h3 mb-2 text-gray-800" align = "center">Add House</h1>
+           <h1 class="h3 mb-2 text-gray-800">Add House</h1>
 
            <!-- DataTales Example -->
            <div class="card shadow border-left-primary mb-4">
@@ -67,60 +65,109 @@ include "landlord_header.php";
                  <table class="table table-borderless" id="dataTable" width="100%" cellspacing="0">
 
                    <tbody>
+                    
                      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
+                     <tr>
+                        <td> Property Name:</td>
+                        <td>
+                          <select class='form-control form-control-user' name="properties">
+                            <?php
+                            //use a while loop to fetch data
+                            //from $all_properties variable
+                            //and display it in the dropdown
+                            while($properties = mysqli_fetch_array(
+                            $all_properties,MYSQLI_ASSOC)):;
+                            
+                            ?>
+                            
+                          <option value="<?php echo $properties['property_id'];
+                          //the value we usually set is the primary key
+                          ?>">
+                          <?php echo $properties['property_name'];
+                          //the text we usually set is the name of the property
+                          ?>
+                          <?php
+                          endwhile;
+                          //the while loop must be terminated
+                          ?>
+                      
+                          </option>
+                          </select>
+                        </td>
+                     </tr>
                        <tr>
                          <td>
                            House Name:
                          </td>
-                         <td><input type='text' class='form-control form-control-user' name='name' required></td>
+                         <td>
+                          <input type='text' class='form-control form-control-user' name='name' required>
+                        </td>
                        </tr>
 
                      <tr>
                        <td>
-                         Is there a compartment?
+                         House Type:
                        </td>
                        <td>
-                         <select class="custom-select" name="compartment" id="terms" style="width:300px;" required>
-                         <option value = "Yes" id="1">Yes</option>
-                         <option value = "No" id="2">No</option>
-                         </select>
+                       <select class="form-control" name="housetype" id="housetype" required>
+                                    <option value="Studio">Studio</option>
+                                    <option value="Bedsitter">Bedsitter</option>
+                                    <option value="Hostel Room">Hostel Room</option>
+                                    <option value="Standalone">Stand-alone(bungalow,mansionnette)</option>
+                                    <option value="Apartment">Apartment</option>
+
                        </td>
                      </tr>
                      <tr>
                        <td>
-                         Rent per month:
+                         Block/section:
                        </td>
                        <td>
-                         <select class="custom-select" name="cost" id="terms" style="width:300px;" required>
-                         <option value = "50000" id="1"> Ksh. 50,000/=</option>
-                         <option value = "60000" id="2">Ksh. 60,000/=</option>
-                         <option value = "70000" id="4">Ksh. 70,000/=</option>
-                         <option value = "80000" id="4">Ksh. 80,000/=</option>
-                       </select>
+                       <input type='text' class='form-control form-control-user' name='block' required>
+                       
+
                        </td>
                      </tr>
                      <tr>
-                     <td></td>
+                       <td>
+                         Bedrooms:
+                       </td>
+                      <td>
+                         <input class="form-control form-control-user" type="number" id="bedrooms" name="bedrooms" min="1" max="5">
+                      </td>
+                      </tr>
+                      <tr>
+                       <td>
+                         Bathrooms:
+                       </td>
+                      <td>
+                         <input class="form-control form-control-user" type="number" id="bedrooms" name="bathrooms" min="1" max="5">
+                      </td>
+                      </tr>
+                       </td>
+                     </tr>
+                      <tr>
+                        <td>
+                          Monthly Rent:
+                        </td>
+                        <td>
+                                <input class="form-control form-control-user" type="number" id="rent" name="rent" min="1" required>
+                     <tr>
+                     </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Deposit:
+                        </td>
+                        <td> 
+                        <input class="form-control form-control-user" type="number" id="deposit" name="deposit" min="0">
+                        </td>
+                      </tr>
                      <td><input class='btn btn-primary btn-user btn-lg' type='submit' name='submit' value='Add House'></td>
                      </form>
                      <tr>
                    </tbody>
-                   <?php
-                   if(isset($_POST["submit"])){
-                     $house = $_POST['name'];
-                     $compartment = $_POST["compartment"];
-                     $cost =  $_POST['cost'];
-                     $status =  "Empty";
-                     $manager_id = $_SESSION['user_id'];
-                     $sql= "INSERT INTO house VALUES ('','$manager_id','$house','$compartment','$cost','$status')";
-                     mysqli_query($con, $sql);
-                     mysqli_close($con);
-                     echo "<script type='text/javascript'>alert('The house has been added successfully.');</script>";
-                     echo '<style>body{display:none;}</style>';
-                     echo '<script>window.location.href = "house_detail.php";</script>';
-
-                 }
-                    ?>
+                   
                  </table>
                </div>
              </div>
@@ -132,21 +179,13 @@ include "landlord_header.php";
        </div>
        <!-- End of Main Content -->
 
-       <!-- Footer -->
-       <footer class="sticky-footer bg-white">
-         <div class="container my-auto">
-           <div class="copyright text-center my-auto">
-             <span>Copyright &copy; RealEst-It 2022</span>
-           </div>
-         </div>
-       </footer>
-       <!-- End of Footer -->
+      
 
      </div>
      <!-- End of Content Wrapper -->
 
    </div>
-   <!-- End of Page Wrapper -->
+   
 
    <!-- Scroll to Top Button-->
    <a class="scroll-to-top rounded" href="#page-top">

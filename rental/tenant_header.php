@@ -22,6 +22,8 @@ if(!$_SESSION['username']){
   <link rel="icon" href="icon.svg">
 
   <!-- Custom fonts for this template-->
+<link type="image/png" sizes="16x16" rel="icon" href=".../icons8-male-user-16.png"> 
+
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -60,15 +62,19 @@ if(!$_SESSION['username']){
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="home.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li> -->
-
-      <!-- Divider -->
+      <li class="nav-item">
+         <a class="nav-link" href="home.php">
+           <i class="bi bi-grid"></i>
+           <span>Dashboard</span></a>
+       </li>
 
       <!-- Heading -->
+      <!-- <li class="nav-item">
+         <a class="nav-link" href="landlord_home.php">
+           <i class="bi bi-grid"></i>
+           
+           <span>Dashboard</span></a>
+       </li> -->
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -100,20 +106,20 @@ if(!$_SESSION['username']){
 
       </li>
 
-      <!-- <li class="nav-item">
+       <li class="nav-item">
         <a class="nav-link" href="form_in.php">
           <i class="fas fa-fw fa-clipboard-list"></i>
           <span>Tenant-In form</span>
-        </a> -->
+        </a> 
 
       </li>
 
       <!-- Nav Item - Charts -->
-      <!-- <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="pay.php">
           <i class="fas fa-fw fa-dollar-sign"></i>
           <span>Pay Here</span></a>
-      </li> -->
+      </li> 
 
       <!-- Nav Item - Tables -->
 

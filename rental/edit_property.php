@@ -76,7 +76,7 @@ while ($row_user = mysqli_fetch_assoc($property_units_query)){
                     </tr>
                     <?php
 					if($property_type=="singleUnit"){?>
-                    <tr class="multiUnit box">
+                    <tr class="singleUnit box">
                     <td>
     					<?php
     					foreach ($property_units as $rows) {

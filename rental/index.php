@@ -41,7 +41,7 @@ include 'conn.php';
   ======================================================== -->
 </head>
 
-<body>
+<body class="text-primary">
 
   <!-- ======= Property Search Section ======= -->
   <div class="click-closed"></div>

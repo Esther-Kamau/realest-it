@@ -23,22 +23,23 @@ include "tenant_header.php";
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php
+                <span class="mr-2 d-none d-lg-inline text-grey-900 small"><?php
+//checks the role in the session and lists it
+$uname = $_SESSION['username'];
 
-                $uname = $_SESSION['username'];
+$query = "SELECT * FROM tenant WHERE u_name = '$uname' ";
+$result = mysqli_query($con, $query);
+$row=mysqli_fetch_assoc($result);
+do{
+  $fname = $row['fname'];
+  $lname = $row['lname'];
+  $full = $fname." ".$lname;
+  echo $full;
+  $row = mysqli_fetch_assoc($result);
+}while ($row);
 
-                $query = "SELECT * FROM tenant WHERE u_name = '$uname' ";
-                $result = mysqli_query($con, $query);
-                $row=mysqli_fetch_assoc($result);
-                do{
-                  $fname = $row['fname'];
-                  $lname = $row['lname'];
-                  $full = $fname." ".$lname;
-                  echo $full;
-                  $row = mysqli_fetch_assoc($result);
-                }while ($row);
-
-                ?></span>
+                  ?></span>
+<i class="bi bi-person text-gray-900"></i>
                 <img class="img-profile rounded-circle" src="user.png">
               </a>
               <!-- Dropdown - User Information -->
@@ -53,12 +54,13 @@ include "tenant_header.php";
 
           </ul>
 
+        
         </nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <h1 class="h3 mb-2 text-gray-800" align="center">Welcome!!</h1>
+          
           <p class="mb-4"><span style="color:red;">You Occupy <b><b>House: <?php
           $query = "SELECT * FROM tenant WHERE u_name = '$uname' ";
           $result1 = mysqli_query($con, $query);
@@ -71,12 +73,12 @@ include "tenant_header.php";
           $result = mysqli_query($con, $sql);
           $row = mysqli_fetch_assoc($result);
           do{
-            $h_id = $row['house_id'];
-            $sql1 = "SELECT * FROM house WHERE house_id = '$h_id'";
+            $unit_id = $row['unit_id'];
+            $sql1 = "SELECT * FROM units WHERE unit_id = '$unit_id'";
             $result1 = mysqli_query($con, $sql1);
             $row1 = mysqli_fetch_assoc($result1);
             do{
-              $name = $row1['house_name'];
+              $name = $row1['unit_name'];
 
               $row1 = mysqli_fetch_assoc($result1);
             }while ($row1);

@@ -1,58 +1,16 @@
 <?php
 include "landlord_header.php";
+include "nav.php";
 ?>
     <div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
       <div id="content">
 
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+       
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+   <div class="container-fluid">
 
-
-          <ul class="navbar-nav ml-auto">
-
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-black small"><?php
-
-                include "conn.php";
-                $uname = $_SESSION['username'];
-                echo "<b><b>".$uname."</b></b>";
-
-                  ?></span>
-<i class="bi bi-person text-gray-900"></i>
-          
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-
-            </li>
-
-          </ul>
-
-        </nav>
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800" align = "center">Houses</h1>
+          <h1 class="h3 mb-2 text-gray-800" >Houses</h1>
 
           <div class="card shadow mb-4">
 
@@ -61,10 +19,14 @@ include "landlord_header.php";
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
+                      <th>Property Name</th>
                       <th>House Name</th>
-                      <th>Compartment</th>
-                      <th>Rent per Month(Ksh.)</th>
-                      <th>Status of the House</th>
+                      <th>House Type</th>
+                      <th>Block</th>
+                      <th>Bedrooms</th>
+                      <th>Bathrooms</th>
+                      <th>Monthly Rent</th>
+                      <th>Deposit</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -76,24 +38,39 @@ include "landlord_header.php";
                     $row = mysqli_fetch_assoc($result);
 
                     do{
-                      $hname = $row['house_name'];
-                      $compartment = $row['compartment'];
-                      $rent = $row['rent_per_month'];
+                      $id = $row['propertyname'];
+                      $housename = $row['house_name'];
+                      $housetype = $row['housetype'];
+                      $block = $row['block'];
+                      $bedrooms = $row['bedrooms'];
+                      $bathrooms = $row['bathrooms'];
+                      $rent = $row['rent'];
+                      $deposit = $row['deposit'];
                       $stat = $row['status'];
                       if ($stat == 'Occupied') {
                         echo '<tr>';
-                        echo '<td>'.$hname.'</td>';
-                        echo '<td>'.$compartment.'</td>';
+                        echo '<td>'.$id.'</td>';
+                        echo '<td>'.$housename.'</td>';
+                        echo '<td>'.$housetype.'</td>';
+                        echo '<td>'.$block. '</td>';
+                        echo '<td>'.$bedrooms.'</td>';
+                        echo '<td>'.$bathrooms.'</td>';
                         echo '<td>'.number_format($rent).'/=</td>';
-                        echo "<td style = 'color:green;'>".$stat."</td>";
-                        echo "<td align = 'center'><a href='delete_house.php?id=".$row['house_id']."' class='btn btn-danger btn-circle'><i class='fas fa-trash'></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='edit_house.php?id=".$row['house_id']."' class='btn btn-success btn-circle'><i class='fas fa-edit'></i></a></td>";
+                        echo '<td>'.number_format($deposit).'/=</td>';
+                        // echo "<td style = 'color:green;'>".$stat."</td>";
+                        // echo "<td align = 'center'><a href='delete_house.php?id=".$row['house_id']."' class='btn btn-danger btn-circle'><i class='fas fa-trash'></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='edit_house.php?id=".$row['house_id']."' class='btn btn-success btn-circle'><i class='fas fa-edit'></i></a></td>";
                         echo '</tr>';
+                        
                       }
                       else {
-                        echo '<tr>';
-                        echo '<td>'.$hname.'</td>';
-                        echo '<td>'.$compartment.'</td>';
+                        echo '<td>'.$id.'</td>';
+                        echo '<td>'.$housename.'</td>';
+                        echo '<td>'.$housetype.'</td>';
+                        echo '<td>'.$block. '</td>';
+                        echo '<td>'.$bedrooms.'</td>';
+                        echo '<td>'.$bathrooms.'</td>';
                         echo '<td>'.number_format($rent).'/=</td>';
+                        echo '<td>'.number_format($deposit).'/=</td>';
                         echo "<td style = 'color:red;'>".$stat."</td>";
                         echo "<td align = 'center'><a href='delete_house.php?id=".$row['house_id']."' class='btn btn-danger btn-circle'><i class='fas fa-trash'></i></a></td>";
                         echo '</tr>';
