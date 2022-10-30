@@ -27,7 +27,8 @@ include "nav.php";
                       <th>Bathrooms</th>
                       <th>Monthly Rent</th>
                       <th>Deposit</th>
-                      <th></th>
+                      <th>Status</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -38,48 +39,62 @@ include "nav.php";
                     $row = mysqli_fetch_assoc($result);
 
                     do{
-                      $id = $row['propertyname'];
+                      $id = $row['property_id'];
                       $housename = $row['house_name'];
-                      $housetype = $row['housetype'];
+                      $housetype = $row['house_type'];
                       $block = $row['block'];
-                      $bedrooms = $row['bedrooms'];
+                      $bedrooms = $row['bedroom'];
                       $bathrooms = $row['bathrooms'];
                       $rent = $row['rent'];
                       $deposit = $row['deposit'];
-                      $stat = $row['status'];
-                      if ($stat == 'Occupied') {
-                        echo '<tr>';
-                        echo '<td>'.$id.'</td>';
-                        echo '<td>'.$housename.'</td>';
-                        echo '<td>'.$housetype.'</td>';
-                        echo '<td>'.$block. '</td>';
-                        echo '<td>'.$bedrooms.'</td>';
-                        echo '<td>'.$bathrooms.'</td>';
-                        echo '<td>'.number_format($rent).'/=</td>';
-                        echo '<td>'.number_format($deposit).'/=</td>';
-                        // echo "<td style = 'color:green;'>".$stat."</td>";
-                        // echo "<td align = 'center'><a href='delete_house.php?id=".$row['house_id']."' class='btn btn-danger btn-circle'><i class='fas fa-trash'></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='edit_house.php?id=".$row['house_id']."' class='btn btn-success btn-circle'><i class='fas fa-edit'></i></a></td>";
-                        echo '</tr>';
+                      $status = $row['status'];
+
+                      if ($status == 'Occupied') {
+                        echo '<tr>
+              <td>'.$row['property_id'].'</td>
+							<td>'.$row['house_name'].'</td>
+							<td>'.$row['house_type'].'</td>
+							<td>'.$row['block'].'</td>
+							<td>'.$row['bedroom'].'</td>
+							<td>'.$row['bathrooms'].'</td>
+              <td>'.$row ['rent'].'</td>
+              <td>'.$row['deposit'].'</td>
+            
+							<td><span '.(($row['status']=='Occupied')?'class="badge badge-success"':'class="badge badge-danger"').'>'.$row['status'].'</span></td>
+							<td class="d-flex">
+								<a href="edit_house.php?id='.$row['property_id'].'" class="btn btn-success btn-circle"><i class="fas fa-edit"></i></a>&nbsp&nbsp&nbsp
+								<a href="delete_house.php?id='.$row['property_id'].'" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>              
+							</td>
+						</tr>';
+           
                         
                       }
                       else {
-                        echo '<td>'.$id.'</td>';
-                        echo '<td>'.$housename.'</td>';
-                        echo '<td>'.$housetype.'</td>';
-                        echo '<td>'.$block. '</td>';
-                        echo '<td>'.$bedrooms.'</td>';
-                        echo '<td>'.$bathrooms.'</td>';
-                        echo '<td>'.number_format($rent).'/=</td>';
-                        echo '<td>'.number_format($deposit).'/=</td>';
-                        echo "<td style = 'color:red;'>".$stat."</td>";
-                        echo "<td align = 'center'><a href='delete_house.php?id=".$row['house_id']."' class='btn btn-danger btn-circle'><i class='fas fa-trash'></i></a></td>";
-                        echo '</tr>';
+
+                        echo '<tr>
+                        
+                        <td>'.$row['property_id'].'</td>
+                        <td>'.$row['house_name'].'</td>
+                        <td>'.$row['house_type'].'</td>
+                        <td>'.$row['block'].'</td>
+                        <td>'.$row['bedroom'].'</td>
+                        <td>'.$row['bathrooms'].'</td>
+                        <td>'.$row ['rent'].'</td>
+                        <td>'.$row['deposit'].'</td>
+                    
+                        <td><span '.(($row['status']=='Empty')?'class="badge badge-danger"':'class="badge badge-danger"').'>'.$row['status'].'</span></td>
+                        <td class="d-flex">
+                          <a href="edit_house.php?id='.$row['property_id'].'" class="btn btn-success btn-circle"><i class="fas fa-edit"></i></a>&nbsp&nbsp&nbsp
+                          <a href="delete_house.php?id='.$row['property_id'].'" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>              
+                        </td>
+                      </tr>';
+                        
                       }
 
 
 
 
-                      $row = mysqli_fetch_assoc($result);
+                     $row = mysqli_fetch_assoc($result);
                     }while ($row);
 
 
@@ -114,19 +129,19 @@ include "nav.php";
                     echo "<td><b><b><span style = 'color:red;'>".mysqli_num_rows($result2)."</span></b></b></td>";
                     echo '</tr>';
 
-                    $sql3 = "SELECT * FROM house WHERE compartment = 'Yes'";
-                    $result3 = mysqli_query($con, $sql3);
-                    echo '<tr>';
-                    echo "<td><b><b>TOTAL NUMBER OF HOUSES <span style = 'color:green;'>WITH</span> COMPARTMENTS</b></b></td>";
-                    echo "<td><b><b><span style = 'color:green;'>".mysqli_num_rows($result3)."</span></b></b></td>";
-                    echo '</tr>';
+                    // $sql3 = "SELECT * FROM house WHERE compartment = 'Yes'";
+                    // $result3 = mysqli_query($con, $sql3);
+                    // echo '<tr>';
+                    // echo "<td><b><b>TOTAL NUMBER OF HOUSES <span style = 'color:green;'>WITH</span> COMPARTMENTS</b></b></td>";
+                    // echo "<td><b><b><span style = 'color:green;'>".mysqli_num_rows($result3)."</span></b></b></td>";
+                    // echo '</tr>';
 
-                    $sql4 = "SELECT * FROM house WHERE compartment = 'No'";
-                    $result4 = mysqli_query($con, $sql4);
-                    echo '<tr>';
-                    echo "<td><b><b>TOTAL NUMBER OF HOUSES <span style = 'color:red;'>WITHOUT</span> COMPARTMENTS</b></b></td>";
-                    echo "<td><b><b><span style = 'color:red;'>".mysqli_num_rows($result4)."</span></b></b></td>";
-                    echo '</tr>';
+                    // $sql4 = "SELECT * FROM house WHERE compartment = 'No'";
+                    // $result4 = mysqli_query($con, $sql4);
+                    // echo '<tr>';
+                    // echo "<td><b><b>TOTAL NUMBER OF HOUSES <span style = 'color:red;'>WITHOUT</span> COMPARTMENTS</b></b></td>";
+                    // echo "<td><b><b><span style = 'color:red;'>".mysqli_num_rows($result4)."</span></b></b></td>";
+                    // echo '</tr>';
 
 
                      ?>
