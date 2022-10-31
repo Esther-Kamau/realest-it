@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include "conn.php";
 if(!$_SESSION['username']){
@@ -87,8 +88,8 @@ if(!$_SESSION['username']){
             <h6 class="collapse-header">Details:</h6>
             <a class="collapse-item" href="u_personal.php">Personal Information</a>
             <a class="collapse-item" href="u_contact.php">Contact Information</a>
-            <!-- <a class="collapse-item" href="upay.php">Payment Information</a> -->
-            <!-- <a class="collapse-item" href="u_contract.php">Contract</a> -->
+            <a class="collapse-item" href="upay.php">Payment Information</a>
+            <a class="collapse-item" href="u_contract.php">Contract</a>
           </div>
         </div>
       </li>

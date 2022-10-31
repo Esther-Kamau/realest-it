@@ -7,7 +7,7 @@ function check($data){
   $data= trim($data);
   $data= htmlspecialchars($data);
   $data= stripslashes($data);
-  $data = mysqli_real_escape_string($con, $data);
+  $data = mysqli_real_escape_string($con , $data);
   return $data;
 }
 
@@ -68,7 +68,8 @@ if(isset($_POST["login"])){
     }
     elseif ($role == "Landlord") {
       $_SESSION['username'] = $uname;
-      echo "<script type='text/javascript'>alert('Welcome $uname!');</script>";
+      echo "<90
+      script type='text/javascript'>alert('Welcome $uname!');</script>";
       echo '<style>body{display:none;}</style>';
       echo '<script>window.location.href = "landlord_home.php";</script>';
     }
@@ -208,7 +209,7 @@ if(isset($_POST["login"])){
     </div>
   </div>
   
-  
+
    
 </section>
   <script>

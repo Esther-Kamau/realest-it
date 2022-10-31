@@ -42,6 +42,7 @@ include "nav.php";
             <th>Landlord's Contact</th>
             <th>Status</th>
             <th>Action</th>
+            <th>View Houses</th>
           </tr>
         </thead>
         <tbody>
@@ -74,6 +75,9 @@ include "nav.php";
 								<a href="edit_property.php?id='.$row['property_id'].'" class="btn btn-success btn-circle"><i class="fas fa-edit"></i></a>&nbsp&nbsp&nbsp
 								<a href="delete_property.php?id='.$row['property_id'].'" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>              
 							</td>
+              <td >
+                <a href="viewhouse.php?id='.$row['property_id'].'" class="btn btn-success btn-circle"><i class="fas fa-eye"></i></a>&nbsp&nbsp&nbsp
+              </td>
 						</tr>';
             }
             else {
@@ -89,6 +93,9 @@ include "nav.php";
 								<a href="edit_property.php?id='.$row['property_id'].'" class="btn btn-success btn-circle"><i class="fas fa-edit"></i></a>&nbsp&nbsp&nbsp
 								<a href="delete_property.php?id='.$row['property_id'].'" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>              
 							</td>
+              <td >
+                <a href="viewhouse.php?id='.$row['property_id'].'" class="btn btn-success btn-circle"><i class="fas fa-eye"></i></a>&nbsp&nbsp&nbsp
+              </td>
 						</tr>';
             }
 
